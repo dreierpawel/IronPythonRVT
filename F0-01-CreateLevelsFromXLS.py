@@ -44,9 +44,6 @@ elevation_values_lst = IN[1]
 
 # --- CODE
 doc = DocumentManager.Instance.CurrentDBDocument
-uiapp = DocumentManager.Instance.CurrentUIApplication
-app = uiapp.Application
-uidoc = uiapp.ActiveUIDocument
 
 # Create a unified name length
 str_level_names_lst = []
