@@ -1,0 +1,686 @@
+{
+  "Uuid": "19ee9bfc-58dc-4c8a-a813-5e4feebd1fcf",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "F0-01 TWÓRZ POZIOMY",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "String": {
+        "Key": "DSCore.String",
+        "Value": "DSCoreNodes.dll"
+      }
+    }
+  },
+  "Inputs": [
+    {
+      "Id": "9063081074bd48508a1b0981c3d42c1b",
+      "Name": "LOKALIZACJA PLIKU CSV Z KONDYGNACJAMI / POZIOMAMI",
+      "Type": "string",
+      "Value": ".\\F0-01 LISTA POZIOMÓW.csv",
+      "Description": "Allows you to select a file on the system to get its filename"
+    }
+  ],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSOffice.Data.ImportCSV@string,bool",
+      "Id": "61d6655e0c9b4d3889476f909948ec56",
+      "Inputs": [
+        {
+          "Id": "96c7ddd5201740888725bf4c75b8cd0e",
+          "Name": "filePath",
+          "Description": "The CSV file to be converted into a list.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ed6fc0ae4e1f42abb81fb4fb5525d991",
+          "Name": "transpose",
+          "Description": "Whether the resulting list should be transposed.\n\nbool\nDefault value : false",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "758149c5d1ff47049f16b2f98d64fbd5",
+          "Name": "list",
+          "Description": "The list containing the items in the CSV file.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Imports data from a CSV (comma separated values) file, put the items into a list and transpose it if needed.\n\nData.ImportCSV (filePath: string, transpose: bool = false): var[]..[]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Filename, CoreNodeModels",
+      "HintPath": "W:\\BIM STANDARD\\DYNAMO PLAYER\\F0-01 LISTA POZIOMÓW.csv",
+      "InputValue": ".\\F0-01 LISTA POZIOMÓW.csv",
+      "NodeType": "ExtensionNode",
+      "Id": "9063081074bd48508a1b0981c3d42c1b",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a09ecc9406f54d6f863d37eb58f06cb8",
+          "Name": "",
+          "Description": "Filename",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a file on the system to get its filename"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Deconstruct@var[]..[]",
+      "Id": "33cce280a16d49bca744dac7805dec40",
+      "Inputs": [
+        {
+          "Id": "b5115d313ec940e39bf6c53798262ce3",
+          "Name": "list",
+          "Description": "List to be split.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": true
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1ff81528a6f944898f74504295d70c60",
+          "Name": "first",
+          "Description": "First item in the list (type: var[]..[])",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dc54491f9c544056b0aa334e9205bef4",
+          "Name": "rest",
+          "Description": "Rest of the list (type: var[]..[])",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Given a list, produces the first item in the list, and a new list containing all items except the first.\n\nList.Deconstruct (list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Transpose@var[]..[]",
+      "Id": "73853a4709f8421aadcf6df0facf44e6",
+      "Inputs": [
+        {
+          "Id": "b512fe8305e84695a7d35c26c27b22dd",
+          "Name": "lists",
+          "Description": "A list of lists to be transposed.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ec7d1c0ed7a549a49dffa3dee76b59a8",
+          "Name": "lists",
+          "Description": "A list of transposed lists.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Swaps rows and columns in a list of lists. If there are some rows that are shorter than others, null values are inserted as place holders in the resultant array such that it is always rectangular.\n\nList.Transpose (lists: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Deconstruct@var[]..[]",
+      "Id": "28fc6cba959f48db9e35a103c2d39415",
+      "Inputs": [
+        {
+          "Id": "e664a19685ff473c841c2305e9cdaa21",
+          "Name": "list",
+          "Description": "List to be split.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": true,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fef875a9d6564d7c96b34a97f5c02c35",
+          "Name": "first",
+          "Description": "First item in the list (type: var[]..[])",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "06d75f02ecb04f7a8d1145e386c0b1da",
+          "Name": "rest",
+          "Description": "Rest of the list (type: var[]..[])",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Given a list, produces the first item in the list, and a new list containing all items except the first.\n\nList.Deconstruct (list: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\nimport sys\r\nsys.path.append('C:\\Program Files (x86)\\IronPython 2.7\\Lib')\r\nimport System\r\nfrom System import Array\r\nfrom System.Collections.Generic import *\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager \r\nfrom RevitServices.Transactions import TransactionManager \r\nclr.AddReference(\"RevitAPI\")\r\nclr.AddReference(\"RevitAPIUI\")\r\nimport Autodesk \r\nfrom Autodesk.Revit.DB import *\r\nfrom Autodesk.Revit.UI import *\r\n####### Definitions ########\r\ndef internal_to_cm(value):\r\n    return UnitUtils.ConvertFromInternalUnits(value, UnitTypeId.Centimeters)\r\n\r\ndef cm_to_internal(value):\r\n    return UnitUtils.ConvertToInternalUnits(value, UnitTypeId.Centimeters)\r\n    \r\n#######Inputs########\r\n\r\n#######CODE########\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuiapp = DocumentManager.Instance.CurrentUIApplication \r\napp = uiapp.Application \r\nuidoc = uiapp.ActiveUIDocument\r\n\r\noutput = []\r\n#######OUT########\r\nOUT = output\r\n\r\n",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "9e752c6ef3b44b6fb3988ab8c38512bf",
+      "Inputs": [
+        {
+          "Id": "d2bceee4fcfc4c8db4938988339476ad",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7fd520a7efd74a1885454b0f24a9bafc",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\nimport sys\r\n\r\nsys.path.append('C:\\Program Files (x86)\\IronPython 2.7\\Lib')\r\nimport System\r\nfrom System import Array\r\nfrom System.Collections.Generic import *\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\n\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nclr.AddReference(\"RevitAPIUI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\nfrom Autodesk.Revit.UI import *\r\n\r\n\r\n# --- Definitions\r\ndef internal_to_cm(value):\r\n    return UnitUtils.ConvertFromInternalUnits(value, UnitTypeId.Centimeters)\r\n\r\n\r\ndef cm_to_internal(value):\r\n    return UnitUtils.ConvertToInternalUnits(value, UnitTypeId.Centimeters)\r\n\r\n\r\n# --- Inputs\r\n\r\n# List of level names\r\nlevel_names_lst = IN[0]\r\n# List of elevations values\r\nelevation_values_lst = IN[1]\r\n\r\n# --- CODE\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuiapp = DocumentManager.Instance.CurrentUIApplication\r\napp = uiapp.Application\r\nuidoc = uiapp.ActiveUIDocument\r\n\r\n# Create a unified name length\r\nstr_level_names_lst = []\r\n\r\nfor level_name in level_names_lst:\r\n    level_name = str(level_name)\r\n    if len(level_name) == 1:\r\n        level_name = \"0\" + level_name\r\n    str_level_names_lst.append(level_name)\r\n\r\n# Create Levels from elevation list\r\noutput = []\r\n\r\nfor level_name, level_elevation in zip(str_level_names_lst, elevation_values_lst):\r\n    TransactionManager.Instance.EnsureInTransaction(doc)\r\n    new_level = Level.Create(doc, cm_to_internal(int(level_elevation)))\r\n    new_level.Name = level_name\r\n    TransactionManager.Instance.TransactionTaskDone()\r\n    output.append(new_level)\r\n\r\n# --- OUT\r\nOUT = output\r\n",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "2683d60527124fa0ad589f790cdd0ed8",
+      "Inputs": [
+        {
+          "Id": "26e57205fa69431db33c6d8ec88399f5",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "245459928c0c4725bfed071f186e5ae6",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bd390f5e84204f639a4fffcda87258aa",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.Flatten@var[]..[],int",
+      "Id": "81ee5f798df84a7386f38681218aa021",
+      "Inputs": [
+        {
+          "Id": "3bcf342134dd424c952c98a5ee0c7a9e",
+          "Name": "list",
+          "Description": "List to flatten.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b3d8baef4f254ed98b1c7b8707948a41",
+          "Name": "amt",
+          "Description": "Layers of nesting to remove.\n\nint\nDefault value : -1",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8854b7185857413eb101194a97716327",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Flattens a nested list of lists by a certain amount.\n\nList.Flatten (list: var[]..[], amt: int = -1): var[]..[]"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "758149c5d1ff47049f16b2f98d64fbd5",
+      "End": "b5115d313ec940e39bf6c53798262ce3",
+      "Id": "0fe588f2d1894d34a43c5124b56cc150"
+    },
+    {
+      "Start": "a09ecc9406f54d6f863d37eb58f06cb8",
+      "End": "96c7ddd5201740888725bf4c75b8cd0e",
+      "Id": "7822705ec57144fb8104dd0b081e9135"
+    },
+    {
+      "Start": "dc54491f9c544056b0aa334e9205bef4",
+      "End": "b512fe8305e84695a7d35c26c27b22dd",
+      "Id": "c96a1d37390e4b8a8ba2d7c988fb648f"
+    },
+    {
+      "Start": "ec7d1c0ed7a549a49dffa3dee76b59a8",
+      "End": "e664a19685ff473c841c2305e9cdaa21",
+      "Id": "0d985d40e8cd417397114da838e54c21"
+    },
+    {
+      "Start": "fef875a9d6564d7c96b34a97f5c02c35",
+      "End": "26e57205fa69431db33c6d8ec88399f5",
+      "Id": "07ff2d0cac0a4e73851014d643380eb7"
+    },
+    {
+      "Start": "06d75f02ecb04f7a8d1145e386c0b1da",
+      "End": "3bcf342134dd424c952c98a5ee0c7a9e",
+      "Id": "a959e57fdca44fe88d8d94b4224d0577"
+    },
+    {
+      "Start": "8854b7185857413eb101194a97716327",
+      "End": "245459928c0c4725bfed071f186e5ae6",
+      "Id": "de48a3acf2d54279876954a7668b6e75"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.10.1.3976",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Data.ImportCSV",
+        "Id": "61d6655e0c9b4d3889476f909948ec56",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 619.58675532845723,
+        "Y": 52.247379556786541
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "LOKALIZACJA PLIKU CSV Z KONDYGNACJAMI / POZIOMAMI",
+        "Id": "9063081074bd48508a1b0981c3d42c1b",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 138.95127825081568,
+        "Y": 42.352347356721282
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Deconstruct",
+        "Id": "33cce280a16d49bca744dac7805dec40",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 856.50748778687534,
+        "Y": 49.440563189728493
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Transpose",
+        "Id": "73853a4709f8421aadcf6df0facf44e6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1046.3645945859143,
+        "Y": 73.1119560044105
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Deconstruct",
+        "Id": "28fc6cba959f48db9e35a103c2d39415",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1265.6149218548503,
+        "Y": 65.872973345518517
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Boilerplate",
+        "Id": "9e752c6ef3b44b6fb3988ab8c38512bf",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1922.441779306399,
+        "Y": -332.83595025640943
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "LevelsByElevation",
+        "Id": "2683d60527124fa0ad589f790cdd0ed8",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1670.6697795391913,
+        "Y": 68.515478076416542
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.Flatten",
+        "Id": "81ee5f798df84a7386f38681218aa021",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1455.6934204391096,
+        "Y": 126.63454445991641
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "e92737da6d004b0391097711d6a48e60",
+        "Title": "<AUTHOR>",
+        "Nodes": [
+          "c5c08eb26c7848bda4bcaa9e301682c7"
+        ],
+        "Left": 118.708905427818,
+        "Top": -342.91198599046635,
+        "Width": 199.59666666666669,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": -289.91198599046635,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "bee8edc6b34742ed84d7cdd7b7ccac96",
+        "Title": "INPUTS",
+        "Nodes": [
+          "8faf2841e29f4ee5b56b7fe379e770eb"
+        ],
+        "Left": 349.309557385149,
+        "Top": -342.91198599046635,
+        "Width": 128.69,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": -289.91198599046635,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFBB87C6"
+      },
+      {
+        "Id": "8c2b8ad77e1a4322a065abc1f5eed0cc",
+        "Title": "DESIGN<DESCRPTION>",
+        "Nodes": [
+          "79d67a5892a04ac093955b626b3c5ec0"
+        ],
+        "Left": 685.618926795052,
+        "Top": -342.911985990466,
+        "Width": 392.11666666666667,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": -289.911985990466,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "7f696ca03726406f943248027556604e",
+        "Title": "IMPORT",
+        "Nodes": [
+          "4c4bfa69599b4e8f89df3027364bf000"
+        ],
+        "Left": 511.08097829202904,
+        "Top": -342.91198599046635,
+        "Width": 137.98666666666668,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": -289.91198599046635,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFD4B6DB"
+      },
+      {
+        "Id": "d96141a226014e0bbb0ee8c8993ee973",
+        "Title": "PYTHON<DESCRPTION>",
+        "Nodes": [
+          "546bbf485db64640a58b82a70f66416f"
+        ],
+        "Left": 1108.4854181360884,
+        "Top": -342.91198599046635,
+        "Width": 407.56666666666672,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": -289.91198599046635,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FF71C6A8"
+      },
+      {
+        "Id": "cffc806b6f254729a0686929dd70a88d",
+        "Title": "SET<DESCRPTION>",
+        "Nodes": [
+          "660cdc24a94945d3beb29f8a9a896da7"
+        ],
+        "Left": 1550.372738858646,
+        "Top": -342.91198599046635,
+        "Width": 324.5266666666667,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": -289.91198599046635,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "8756909b1d9147b2b0efc632bc88b4c5",
+        "Title": "IMPORT CSV",
+        "Nodes": [
+          "9063081074bd48508a1b0981c3d42c1b"
+        ],
+        "Left": 128.95127825081568,
+        "Top": -10.647652643278718,
+        "Width": 440.0,
+        "Height": 147.0,
+        "FontSize": 36.0,
+        "InitialTop": 42.352347356721282,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "e6e80d1eac834520aea42cfd0469910e",
+        "Title": "DESIGN <LevelsFromXls>",
+        "Nodes": [
+          "61d6655e0c9b4d3889476f909948ec56",
+          "33cce280a16d49bca744dac7805dec40",
+          "73853a4709f8421aadcf6df0facf44e6",
+          "28fc6cba959f48db9e35a103c2d39415"
+        ],
+        "Left": 609.58675532845723,
+        "Top": -3.5594368102715066,
+        "Width": 826.02816652639308,
+        "Height": 188.43241015579002,
+        "FontSize": 36.0,
+        "InitialTop": 49.440563189728493,
+        "InitialHeight": 168.671392814682,
+        "TextblockHeight": 43.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "4b6362907d5f4d19ac8cb78b7e3189a1",
+        "Title": "Set<LevelsByElevation>",
+        "Nodes": [
+          "2683d60527124fa0ad589f790cdd0ed8"
+        ],
+        "Left": 1660.6697795391913,
+        "Top": 15.515478076416542,
+        "Width": 387.00666666666672,
+        "Height": 183.0,
+        "FontSize": 36.0,
+        "InitialTop": 68.515478076416542,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "c5c08eb26c7848bda4bcaa9e301682c7",
+        "Title": "AUTHOR: PAWEŁ DREIER©",
+        "Nodes": [],
+        "Left": 128.708905427818,
+        "Top": -289.91198599046635,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "8faf2841e29f4ee5b56b7fe379e770eb",
+        "Title": "INPUTS",
+        "Nodes": [],
+        "Left": 359.309557385149,
+        "Top": -289.91198599046635,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "79d67a5892a04ac093955b626b3c5ec0",
+        "Title": "DESIGN <DESCRIPTION>",
+        "Nodes": [],
+        "Left": 695.618926795052,
+        "Top": -289.911985990466,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4c4bfa69599b4e8f89df3027364bf000",
+        "Title": "IMPORT FILES",
+        "Nodes": [],
+        "Left": 521.080978292029,
+        "Top": -289.91198599046635,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "546bbf485db64640a58b82a70f66416f",
+        "Title": "PYTHON <DESCRIPTION>",
+        "Nodes": [],
+        "Left": 1118.4854181360884,
+        "Top": -289.91198599046635,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "660cdc24a94945d3beb29f8a9a896da7",
+        "Title": "SET <DESCRIPTION>",
+        "Nodes": [],
+        "Left": 1560.372738858646,
+        "Top": -289.91198599046635,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -284.91625180738629,
+    "Y": 289.92926830076715,
+    "Zoom": 0.33629773400302732
+  }
+}
