@@ -1,3 +1,4 @@
+# P.DREIER ©  github.com/dreierpawel
 import clr
 import sys
 
