@@ -1,0 +1,498 @@
+{
+  "Uuid": "396fedbc-f9b3-4a72-9b0b-156ca14df81e",
+  "IsCustomNode": false,
+  "Description": null,
+  "Name": "F0-04 CopyViewFamilyTypesAndViewTemplates",
+  "ElementResolver": {
+    "ResolutionMap": {
+      "List": {
+        "Key": "List",
+        "Value": "BuiltIn.ds"
+      }
+    }
+  },
+  "Inputs": [
+    {
+      "Id": "f6578417d59a469e8c3d872abec90d2f",
+      "Name": "WPISZ  NOWĄ FAZĘ PROJ. VT",
+      "Type": "string",
+      "Value": "PE",
+      "Description": "Creates a string."
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "59e0b458be83413e9aaafd46cc392c18",
+      "Name": "WPISZ FAZĘ PROJ. VT DO SKOPIOWANIA",
+      "Type": "string",
+      "InitialValue": "PK",
+      "Description": "Creates a string."
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\nimport sys\r\nsys.path.append('C:\\Program Files (x86)\\IronPython 2.7\\Lib')\r\nimport System\r\nfrom System import Array\r\nfrom System.Collections.Generic import *\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager \r\nfrom RevitServices.Transactions import TransactionManager \r\nclr.AddReference(\"RevitAPI\")\r\nclr.AddReference(\"RevitAPIUI\")\r\nimport Autodesk \r\nfrom Autodesk.Revit.DB import *\r\nfrom Autodesk.Revit.UI import *\r\n####### Definitions ########\r\ndef internal_to_cm(value):\r\n    return UnitUtils.ConvertFromInternalUnits(value, UnitTypeId.Centimeters)\r\n\r\ndef cm_to_internal(value):\r\n    return UnitUtils.ConvertToInternalUnits(value, UnitTypeId.Centimeters)\r\n    \r\n#######Inputs########\r\n\r\n#######CODE########\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuiapp = DocumentManager.Instance.CurrentUIApplication \r\napp = uiapp.Application \r\nuidoc = uiapp.ActiveUIDocument\r\n\r\noutput = []\r\n#######OUT########\r\nOUT = output\r\n\r\n",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "65084b398d924bec92dc1187bccbff81",
+      "Inputs": [
+        {
+          "Id": "ed13db501c0f4264b3795d35be431f99",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9068d02243b9471db227a122501ac88d",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2e99da3be5614652b6600e3ff1cb9922",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "PK",
+      "Id": "59e0b458be83413e9aaafd46cc392c18",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c802b45340084276a0604fcfdd01292b",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "PE",
+      "Id": "f6578417d59a469e8c3d872abec90d2f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "32f3230b8f834141acc232920f70f740",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\nimport sys\r\n\r\nsys.path.append('C:\\Program Files (x86)\\IronPython 2.7\\Lib')\r\nimport System\r\nfrom System import Array\r\nfrom System.Collections.Generic import *\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference(\"RevitNodes\")\r\nimport Revit\r\n\r\nclr.ImportExtensions(Revit.Elements)\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nclr.AddReference(\"RevitAPIUI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\nfrom Autodesk.Revit.UI import *\r\n\r\n\r\n# Definitions\r\ndef internal_to_cm(value):\r\n    return UnitUtils.ConvertFromInternalUnits(value, UnitTypeId.Centimeters)\r\n\r\n\r\ndef cm_to_internal(value):\r\n    return UnitUtils.ConvertToInternalUnits(value, UnitTypeId.Centimeters)\r\n\r\n\r\ndef get_sh_parameter_value_by_name(element, parameter_name):\r\n    try:\r\n        parameter_value = element.LookupParameter(parameter_name)\r\n        parameter_type = parameter_value.StorageType\r\n        if parameter_type == StorageType.String:\r\n            parameter_value = parameter_value.AsString()\r\n        if parameter_type == StorageType.Integer:\r\n            parameter_value = parameter_value.AsInteger()\r\n        if parameter_type == StorageType.Double:\r\n            parameter_value = parameter_value.AsDouble()\r\n        if parameter_type == StorageType.ElementId:\r\n            parameter_value = parameter_value.AsElementId()\r\n        if element.LookupParameter(parameter_name).HasValue is False:\r\n            parameter_value = False\r\n    except TypeError:\r\n        parameter_value = False\r\n    return parameter_value\r\n\r\n\r\ndef set_sh_parameter_value_by_value(element, parameter_name, parameter_value):\r\n    global doc\r\n    try:\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        element.LookupParameter(parameter_name).Set(parameter_value)\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n    except Exception:\r\n        element = False\r\n    return element\r\n\r\n\r\ndef collect_view_family_types():\r\n    global doc\r\n    # Collect View Family Types\r\n    return FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()\r\n\r\n\r\ndef collect_view_templates():\r\n    # Collect Views\r\n    all_views_list = FilteredElementCollector(doc).OfClass(View).ToElements()\r\n    view_templates_list = []\r\n    # Filter View Templates\r\n    for view in all_views_list:\r\n        if view.IsTemplate is True:\r\n            view_templates_list.append(view)\r\n        else:\r\n            pass\r\n    return view_templates_list\r\n\r\n\r\ndef filter_list_by_sh_parameter_and_value(element_list, parameter_name, parameter_value):\r\n    output_list = []\r\n    for element in element_list:\r\n        # Create Boolean Filter by SH Parameter Value\r\n        bool_filter = get_sh_parameter_value_by_name(element, parameter_name) == parameter_value\r\n        if bool_filter is True:\r\n            output_list.append(element)\r\n    return output_list\r\n\r\n\r\ndef filter_list_by_name_contains(element_list, parameter_value):\r\n    output_list = []\r\n    for element in element_list:\r\n        # Filter by Element Type Name Contains parameter_value\r\n        element_name = Autodesk.Revit.DB.Element.Name.__get__(element)\r\n        if parameter_value in element_name:\r\n            output_list.append(element)\r\n    return output_list\r\n\r\n\r\ndef copy_view_template_by_view_family_type(view_family_type, old_phase, new_phase):\r\n    # Get Default View Template Id\r\n    view_template_id = view_family_type.get_Parameter(BuiltInParameter.DEFAULT_VIEW_TEMPLATE).AsElementId()\r\n    # Get Default View Template\r\n    view_template = doc.GetElement(view_template_id)\r\n    # Get Default View Template Name\r\n    view_template_name = Autodesk.Revit.DB.Element.Name.__get__(view_template)\r\n    # Create New View Template Name\r\n    new_view_template_name = view_template_name.replace(old_phase, new_phase)\r\n    # Create ICollection[ElementId]\r\n    vt_ids_list = []\r\n    vt_ids_list.append(view_template.Id)\r\n    vt_ids_collection = List[ElementId](vt_ids_list)\r\n    TransactionManager.Instance.EnsureInTransaction(doc)\r\n    # Copy Element\r\n    new_view_ids_list = ElementTransformUtils.CopyElements(doc, vt_ids_collection, doc, Transform.Identity, CopyPasteOptions())\r\n    new_view = doc.GetElement(new_view_ids_list[0])\r\n    # Set New Name\r\n    new_view.Name = new_view_template_name\r\n    # Set New Phase\r\n    set_sh_parameter_value_by_value(new_view, \"BIMPL_FAZA\", new_phase)\r\n    TransactionManager.Instance.TransactionTaskDone()\r\n    return new_view\r\n\r\n\r\ndef copy_view_family_types(elements_list_to_copy, old_phase, new_phase):\r\n    new_view_family_types_list = []\r\n    for view_family_type in elements_list_to_copy:\r\n        # Get Actual View Family Type Name\r\n        view_family_type_name = Autodesk.Revit.DB.Element.Name.__get__(view_family_type)\r\n        # Create New Family Type Name\r\n        new_view_family_type_name = view_family_type_name.replace(old_phase, new_phase)\r\n        # Create ICollection[ElementId]\r\n        ids_list = []\r\n        ids_list.append(view_family_type.Id)\r\n        ids_collection = List[ElementId](ids_list)\r\n        # Start New Transaction\r\n        TransactionManager.Instance.EnsureInTransaction(doc)\r\n        # Copy Element\r\n        new_view_family_type_ids_list = ElementTransformUtils.CopyElements(doc, ids_collection, doc, Transform.Identity, CopyPasteOptions())\r\n        # Get Element by Element Id\r\n        new_view_family_type = doc.GetElement(new_view_family_type_ids_list[0])\r\n        # Set New Name\r\n        new_view_family_type.Name = new_view_family_type_name\r\n        TransactionManager.Instance.TransactionTaskDone()\r\n        # Get View Family Type default View Template and Create New View Template if Old View Template Exist\r\n        # Check Actual View Template\r\n        vt_test = view_family_type.get_Parameter(BuiltInParameter.DEFAULT_VIEW_TEMPLATE).AsElementId().IntegerValue != -1\r\n        if vt_test is True:\r\n            new_view_template = copy_view_template_by_view_family_type(view_family_type, old_phase, new_phase)\r\n            # Set New View Template\r\n            TransactionManager.Instance.EnsureInTransaction(doc)\r\n            new_view_family_type_view_template = new_view_family_type.get_Parameter(BuiltInParameter.DEFAULT_VIEW_TEMPLATE)\r\n            new_view_family_type_view_template.Set(new_view_template.Id)\r\n            TransactionManager.Instance.TransactionTaskDone()\r\n        # Create List of new View Family Types\r\n        new_view_family_types_list.append(new_view_family_type)\r\n    return new_view_family_types_list\r\n\r\n\r\n# Inputs\r\n\r\n# Input - Existing Phase abrev. to copy ex. \"PK\"\r\nold_phase = IN[0]\r\n# Input - New Phase abrev. ex. \"PAB\"\r\nnew_phase = IN[1]\r\n\r\n# CODE\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuiapp = DocumentManager.Instance.CurrentUIApplication\r\napp = uiapp.Application\r\nuidoc = uiapp.ActiveUIDocument\r\n# Collect View Family Types\r\nview_family_types_list = collect_view_family_types()\r\n# Filter View Family Types by Phase\r\nview_family_types_list = filter_list_by_name_contains(view_family_types_list, old_phase)\r\n# Copy Views Family Types and Create New view Templates\r\nnew_view_family_types_list = copy_view_family_types(view_family_types_list, old_phase, new_phase)\r\n# OUT\r\nOUT = new_view_family_types_list\r\n",
+      "Engine": "IronPython2",
+      "VariableInputPorts": true,
+      "Id": "b24f4fa13c214fa28b609d0f6eed20a6",
+      "Inputs": [
+        {
+          "Id": "ae803b91e4f949038660435f4852519f",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "750aaf3d5698467a95382f55dd785915",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c600a5f8357a461e8eb5dd3b0e4fcc45",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "c802b45340084276a0604fcfdd01292b",
+      "End": "ae803b91e4f949038660435f4852519f",
+      "Id": "972fca1975ea41aaaf8ebbd9626f626f"
+    },
+    {
+      "Start": "32f3230b8f834141acc232920f70f740",
+      "End": "750aaf3d5698467a95382f55dd785915",
+      "Id": "b77a4ddcb9584c2d862ff8f326b7a96d"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.10.1.3976",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Python Boilerplate",
+        "Id": "65084b398d924bec92dc1187bccbff81",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": true,
+        "X": 1219.7937445710224,
+        "Y": 554.5575173656066
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "WPISZ FAZĘ PROJ. VT DO SKOPIOWANIA",
+        "Id": "59e0b458be83413e9aaafd46cc392c18",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "X": -16.654273323351134,
+        "Y": 1014.471868975398
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "WPISZ  NOWĄ FAZĘ PROJ. VT",
+        "Id": "f6578417d59a469e8c3d872abec90d2f",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -16.72351538206027,
+        "Y": 1078.5095113355028
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Boilerplate",
+        "Id": "b24f4fa13c214fa28b609d0f6eed20a6",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 465.40756782118808,
+        "Y": 1037.1835707084547
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "00b6566226394104b611d48bd713c401",
+        "Title": "DESIGN<DESCRPTION>",
+        "Nodes": [
+          "0cc01efae87d4ef4b38b8cfb4fa9caf5"
+        ],
+        "Left": -20.942170619298849,
+        "Top": 580.98046722058712,
+        "Width": 392.11666666666667,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": 633.98046722058712,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "706b367cddbf4ae3b3da0448db1b0a20",
+        "Title": "PYTHON<DESCRPTION>",
+        "Nodes": [
+          "55348185b9934555b280889dc4ae84cd"
+        ],
+        "Left": 401.92432072173733,
+        "Top": 580.98046722058666,
+        "Width": 407.56666666666672,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": 633.98046722058666,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FF71C6A8"
+      },
+      {
+        "Id": "b83d0d489f094229aa0d32dc8a24fdf2",
+        "Title": "SET<DESCRPTION>",
+        "Nodes": [
+          "bd855299b68c44ecb89469ab70d72e34"
+        ],
+        "Left": 843.811641444295,
+        "Top": 580.98046722058666,
+        "Width": 324.5266666666667,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": 633.98046722058666,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "c40902c727764ebeaa8799ace0869549",
+        "Title": "IMPORT",
+        "Nodes": [
+          "31c3663f29b242a1aed688692d16902d"
+        ],
+        "Left": -195.48011912232187,
+        "Top": 580.98046722058666,
+        "Width": 137.98666666666668,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": 633.98046722058666,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFD4B6DB"
+      },
+      {
+        "Id": "56ebc1b60d79441e9becd626d7c82dd0",
+        "Title": "INPUTS",
+        "Nodes": [
+          "66398380a4de48daa82e6ab35463e2a4"
+        ],
+        "Left": -357.25154002920203,
+        "Top": 580.98046722058666,
+        "Width": 128.69,
+        "Height": 102.0,
+        "FontSize": 36.0,
+        "InitialTop": 633.98046722058666,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFBB87C6"
+      },
+      {
+        "Id": "78785665dcb9438eb92446e8d53f8888",
+        "Title": "<AUTHOR>",
+        "Nodes": [
+          "1d8143761046462383605aebe83f5634"
+        ],
+        "Left": -587.852191986533,
+        "Top": 580.98046722058666,
+        "Width": 199.59666666666669,
+        "Height": 117.0,
+        "FontSize": 36.0,
+        "InitialTop": 633.98046722058666,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "1b090393bc3448e7af472da098678ea1",
+        "Title": "<INFO>",
+        "Nodes": [
+          "54191994672c4ea58ce799f2f9ee2770",
+          "63449e2243344c788f332de02b20dbb4"
+        ],
+        "Left": -589.91907699303806,
+        "Top": 717.20128808380719,
+        "Width": 150.0,
+        "Height": 383.71222163084531,
+        "FontSize": 36.0,
+        "InitialTop": 770.20128808380719,
+        "InitialHeight": 282.71222163084531,
+        "TextblockHeight": 43.0,
+        "Background": "#FFD8D8D8"
+      },
+      {
+        "Id": "0fb94417c9f94a9c86fe4c859a9cc9bc",
+        "Title": "INPUTS",
+        "Nodes": [
+          "59e0b458be83413e9aaafd46cc392c18",
+          "f6578417d59a469e8c3d872abec90d2f"
+        ],
+        "Left": -26.72351538206027,
+        "Top": 961.471868975398,
+        "Width": 324.06924205870911,
+        "Height": 185.03764236010477,
+        "FontSize": 36.0,
+        "InitialTop": 1014.471868975398,
+        "InitialHeight": 209.03764236010477,
+        "TextblockHeight": 43.0,
+        "Background": "#FFBB87C6"
+      },
+      {
+        "Id": "2660dae6b3874700bee10892146578da",
+        "Title": "SET<CopyViewFamilyTypesAndViewTemplates>",
+        "Nodes": [
+          "b24f4fa13c214fa28b609d0f6eed20a6"
+        ],
+        "Left": 455.40756782118808,
+        "Top": 984.18357070845468,
+        "Width": 763.83,
+        "Height": 183.0,
+        "FontSize": 36.0,
+        "InitialTop": 1037.1835707084547,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFF7BAC"
+      },
+      {
+        "Id": "55348185b9934555b280889dc4ae84cd",
+        "Title": "PYTHON <DESCRIPTION>",
+        "Nodes": [],
+        "Left": 411.92432072173733,
+        "Top": 633.98046722058666,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "bd855299b68c44ecb89469ab70d72e34",
+        "Title": "SET <DESCRIPTION>",
+        "Nodes": [],
+        "Left": 853.811641444295,
+        "Top": 633.98046722058666,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "0cc01efae87d4ef4b38b8cfb4fa9caf5",
+        "Title": "DESIGN <DESCRIPTION>",
+        "Nodes": [],
+        "Left": -10.942170619298849,
+        "Top": 633.98046722058712,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "31c3663f29b242a1aed688692d16902d",
+        "Title": "IMPORT FILES",
+        "Nodes": [],
+        "Left": -185.48011912232187,
+        "Top": 633.98046722058666,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "66398380a4de48daa82e6ab35463e2a4",
+        "Title": "INPUTS",
+        "Nodes": [],
+        "Left": -347.25154002920203,
+        "Top": 633.98046722058666,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "54191994672c4ea58ce799f2f9ee2770",
+        "Title": "WW-KOORDYNACJA\r\nIX-INSTALACJE\r\nIS-SANITARNE\r\nIW-WENTYLACJA\r\nIE-ELEKTRYKA\r\nIC-CYRKULACJA\r\nPP-PPOŻ",
+        "Nodes": [],
+        "Left": -579.91907699303806,
+        "Top": 770.20128808380719,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "63449e2243344c788f332de02b20dbb4",
+        "Title": "F0 - MACROBIM\r\nF1 - PK\r\nF2 - PB\r\nF3 - PT\r\nF4 - BUDOWA\r\nF5 - FM\r\n\r\nAREA PLANS:\r\n-PC\r\n-PUM/PUU\r\n-STREFY POŻ",
+        "Nodes": [],
+        "Left": -578.3463042829876,
+        "Top": 907.91350971465249,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "1d8143761046462383605aebe83f5634",
+        "Title": "AUTHOR:\r\n©PAWEŁ DREIER",
+        "Nodes": [],
+        "Left": -577.852191986533,
+        "Top": 633.98046722058666,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -109.14218570371077,
+    "Y": -452.69591539570752,
+    "Zoom": 0.78670116360477949
+  }
+}
