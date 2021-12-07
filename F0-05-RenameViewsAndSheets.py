@@ -226,9 +226,9 @@ def sort_views_by_parameter(views_list, parameter_name):
     return views_lst
 
 
-def list_duplicates(source_List):
+def list_duplicates(source_list):
     tally = defaultdict(list)
-    for i, item in enumerate(source_List):
+    for i, item in enumerate(source_list):
         tally[item].append(i)
     return ((key, locs) for key, locs in tally.items() if len(locs) > 1)
 
