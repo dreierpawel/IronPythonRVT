@@ -32,25 +32,51 @@ import collections
 from collections import defaultdict
 import System.Reflection
 
+# Definitions
 # INPUTS
-import_view = UnwrapElement(IN[0])
-active = UnwrapElement(IN[1])
-# CODE
 doc = DocumentManager.Instance.CurrentDBDocument
-categories = doc.Settings.Categories
-output = []
-for i in categories:
+parent_view = UnwrapElement(IN[0])
+bool_test = UnwrapElement(IN[1])
+child_view = doc.ActiveView
+
+if bool_test is True:
     try:
-        from_overide = import_view.GetCategoryOverrides(i.Id)
-        from_hidden = import_view.GetCategoryHidden(i.Id)
-        TransactionManager.Instance.EnsureInTransaction(doc)
-        active.SetCategoryOverrides(i.Id, from_overide)
-        active.SetCategoryHidden(i.Id, from_hidden)
-        TransactionManager.Instance.TransactionTaskDone()
-        output.append((i.Name, from_hidden))
+        child_view_filters_ids_list = child_view.GetFilters()
+        for i in child_view_filters_ids_list:
+            TransactionManager.Instance.EnsureInTransaction(doc)
+            child_view.RemoveFilter(i)
+            TransactionManager.Instance.TransactionTaskDone()
     except:
         pass
 
-category_collector = FilteredElementCollector(doc).OfClass(typeof(categories))
+# Get Filters from Parent View
+parent_view_filters_ids_list = parent_view.GetFilters()
+# Set Filters Overrides to Child View
+for view_filter in parent_view_filters_ids_list:
+    try:
+        view_filter_visibility = parent_view.GetFilterVisibility(view_filter)
+        view_filter_overrides = parent_view.GetFilterOverrides(view_filter)
+        TransactionManager.Instance.EnsureInTransaction(doc)
+        child_view.AddFilter(view_filter)
+        child_view.SetFilterOverrides(view_filter, view_filter_overrides)
+        child_view.SetFilterVisibility(view_filter, view_filter_visibility)
+        TransactionManager.Instance.TransactionTaskDone()
+        output_f = "Success"
+    except:
+        output_f = "Error"
+
+categories = doc.Settings.Categories
+for i in categories:
+    try:
+        parent_view_override = parent_view.GetCategoryOverrides(i.Id)
+        parent_category_hidden = parent_view.GetCategoryHidden(i.Id)
+        TransactionManager.Instance.EnsureInTransaction(doc)
+        child_view.SetCategoryOverrides(i.Id, parent_view_override)
+        child_view.SetCategoryHidden(i.Id, parent_category_hidden)
+        TransactionManager.Instance.TransactionTaskDone()
+        output_c = "Success"
+    except:
+        output_c = "Error"
+
 # OUTPUT
-OUT = doc.ActiveView, output, category_collector
+OUT = output_f, output_c
