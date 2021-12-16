@@ -33,7 +33,7 @@ def doc():
     return DocumentManager.Instance.CurrentDBDocument
 
 
-def toCM(value):
+def to_cm(value):
     return UnitUtils.ConvertFromInternalUnits(value, UnitTypeId.Centimeters)
 
 
@@ -41,54 +41,59 @@ def flatten(t):
     return [item for sublist in t for item in sublist]
 
 
-def getInstance(filter):
+def get_instance(filter):
     return filter.WhereElementIsNotElementType().ToElements()
 
 
-def getFamily(instance):
-    # doc = doc()
+def get_family(instance):
+    global doc
     id = instance.GetTypeId()
     family = doc.GetElement(id)
     family_name = family.Family.Name
     return (family, family_name)
 
 
-def filterInstanceByFamilyName(instance, stringInName):
-    family_name = getFamily(instance)[1]
-    if stringInName in family_name:
+def filter_instance_by_family_name(instance, string_in_name):
+    family_name = get_family(instance)[1]
+    if string_in_name in family_name:
         return instance
     else:
         pass
 
 
-def getFamilyLenParameterByName(instance, parameterName):
-    family = getFamily(instance)[0]
-    parameter_value = toCM(family.LookupParameter(parameterName).AsDouble())
+def get_family_len_parameter_by_name(instance, parameter_name):
+    family = get_family(instance)[0]
+    parameter_value = to_cm(family.LookupParameter(parameter_name).AsDouble())
     return parameter_value
 
 
-def getFamilyTxtParameterByName(instance, parameterName):
-    family = getFamily(instance)[0]
-    parameter_value = family.LookupParameter(parameterName).AsString()
+def get_family_txt_parameter_by_name(instance, parameter_name):
+    family = get_family(instance)[0]
+    parameter_value = family.LookupParameter(parameter_name).AsString()
     return parameter_value
 
 
-def getInstanceLocationPoint(instance):
-    return toCM(instance.Location.Point.Z)
+def get_instance_location_point(instance):
+    return to_cm(instance.Location.Point.Z)
 
 
-def takeClosest(myList, myNumber, index_n=0):
-    newlst = []
-    for i in myList:
-        newlst.append(i - myNumber)
-    abslst = [abs(ele) for ele in newlst]
-    index = abslst.index(min(abslst))
-    value = myList[index + index_n]
+def take_closest(my_list, my_number):
+    new_lst = []
+    for i in my_list:
+        new_lst.append(i - my_number)
+    absolute_lst = [abs(ele) for ele in new_lst]
+    index = absolute_lst.index(min(absolute_lst))
+    value = my_list[index]
+    if value - my_number <= 0:
+        try:
+            value = my_list[index + 1]
+        except IndexError:
+            pass
     return value
 
 
-def takeLevelName(element, levels_and_elevations_lst):
-    p = getInstanceLocationPoint(element)
+def take_level_name(element, levels_and_elevations_lst):
+    p = get_instance_location_point(element)
     levels_lst = zip(*levels_and_elevations_lst)[0]
     elev_lst = zip(*levels_and_elevations_lst)[1]
     if p <= min(elev_lst):
@@ -98,13 +103,13 @@ def takeLevelName(element, levels_and_elevations_lst):
             i = elev_lst.index(min(elev_lst))
             return levels_lst[i].Name
         else:
-            elev_h = takeClosest(elev_lst, p)
+            elev_h = take_closest(elev_lst, p)
             test = elev_h - p
             if test <= 0:
-                i = elev_lst.index(takeClosest(elev_lst, p))
+                i = elev_lst.index(take_closest(elev_lst, p))
                 return levels_lst[i].Name
             else:
-                i = elev_lst.index(takeClosest(elev_lst, p, -1))
+                i = elev_lst.index(take_closest(elev_lst, p, -1))
                 return levels_lst[i].Name
 
 
@@ -126,7 +131,7 @@ all_levels_list = FilteredElementCollector(doc).OfClass(Level).WhereElementIsNot
 # Sort Lvels
 levels_and_parameters_lst = []
 for level in all_levels_list:
-    level_elevation = toCM(level.Elevation)
+    level_elevation = to_cm(level.Elevation)
     levels_and_parameters_lst.append((level, level_elevation))
 # Sort Levels and parameters list by elevation
 levels_and_parameters_lst = sorted(levels_and_parameters_lst, key=lambda x: x[1], reverse=False)
@@ -134,15 +139,15 @@ levels_and_parameters_lst = sorted(levels_and_parameters_lst, key=lambda x: x[1]
 levels_lst = zip(*levels_and_parameters_lst)[0]
 
 # Windows & Doors Instance List
-windows = getInstance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Windows))
-doors = getInstance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors))
+windows = get_instance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Windows))
+doors = get_instance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors))
 windows_doors = flatten([windows, doors])
 
 for element in windows_doors:
-    location_h = getInstanceLocationPoint(element)
-    opening_h = getFamilyLenParameterByName(element, "OTWÓR WYSOKOŚĆ")
-    opening_rough_h = getFamilyLenParameterByName(element, "OTWÓR ŻELBET WYSOKOŚĆ")
-    floor_h = getFamilyLenParameterByName(element, "POSADZKA GRUBOŚĆ WARSTW")
+    location_h = get_instance_location_point(element)
+    opening_h = get_family_len_parameter_by_name(element, "OTWÓR WYSOKOŚĆ")
+    opening_rough_h = get_family_len_parameter_by_name(element, "OTWÓR ŻELBET WYSOKOŚĆ")
+    floor_h = get_family_len_parameter_by_name(element, "POSADZKA GRUBOŚĆ WARSTW")
     # Get Parameters
     top_value = str((location_h + opening_rough_h) / 100)
     top_value = elev_replacer(top_value)
@@ -170,13 +175,13 @@ for element in windows_doors:
     TransactionManager.Instance.TransactionTaskDone()
 
 # Openings Instance List
-speciality_equipment = getInstance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_SpecialityEquipment))
-structural_framing = getInstance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming))
+speciality_equipment = get_instance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_SpecialityEquipment))
+structural_framing = get_instance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming))
 elements = flatten([speciality_equipment, structural_framing])
 openings = []
 for e in elements:
     try:
-        parameter_value = getFamilyTxtParameterByName(e, "BIMPL_TYP")
+        parameter_value = get_family_txt_parameter_by_name(e, "BIMPL_TYP")
         if "OT." in parameter_value:
             openings.append(e)
     except:
@@ -186,17 +191,17 @@ output = []
 
 for opening in openings:
     # Get Parameters
-    opening_system = getFamilyTxtParameterByName(opening, "BIMPL_SYSTEM")
-    opening_type = getFamilyTxtParameterByName(opening, "BIMPL_TYP")
+    opening_system = get_family_txt_parameter_by_name(opening, "BIMPL_SYSTEM")
+    opening_type = get_family_txt_parameter_by_name(opening, "BIMPL_TYP")
     if opening_system == "STR":
         level = opening.get_Parameter(BuiltInParameter.FAMILY_LEVEL_PARAM)
         level_name = doc.GetElement(level.AsElementId()).Name
     else:
-        location_h = getInstanceLocationPoint(opening)
-        level_name = takeLevelName(opening, levels_and_parameters_lst)
+        location_h = get_instance_location_point(opening)
+        level_name = take_level_name(opening, levels_and_parameters_lst)
         if "T.O" in opening_type:
             # Oval openings in walls
-            opening_fi = toCM(opening.LookupParameter("OTWÓR ŚREDNICA").AsDouble())
+            opening_fi = to_cm(opening.LookupParameter("OTWÓR ŚREDNICA").AsDouble())
             fi_value = str(round((location_h + (opening_fi / 2)) / 100, 2))
             TransactionManager.Instance.EnsureInTransaction(doc)
             op_elevation = opening.LookupParameter("OTWÓR RZĘDNA OSI")
@@ -205,7 +210,7 @@ for opening in openings:
             TransactionManager.Instance.TransactionTaskDone()
         else:
             # Rectang openings in walls
-            opening_h = toCM(opening.LookupParameter("OTWÓR WYSOKOŚĆ").AsDouble())
+            opening_h = to_cm(opening.LookupParameter("OTWÓR WYSOKOŚĆ").AsDouble())
             elev_top = str(round((location_h + (opening_h)) / 100, 2))
             elev_bottom = str(round(location_h / 100, 2))
             TransactionManager.Instance.EnsureInTransaction(doc)
@@ -221,18 +226,18 @@ for opening in openings:
     TransactionManager.Instance.TransactionTaskDone()
 
 # Elevators Instance List
-caseworks = getInstance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Casework))
+caseworks = get_instance(FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Casework))
 elevators = []
 for c in caseworks:
-    elevator = filterInstanceByFamilyName(c, "WINDA")
+    elevator = filter_instance_by_family_name(c, "WINDA")
     if not str(elevator) == "None":
         elevators.append(elevator)
 
 for element in elevators:
-    location_h = getInstanceLocationPoint(element)
-    opening_h = getFamilyLenParameterByName(element, "OTWÓR WYSOKOŚĆ")
-    opening_rough_h = getFamilyLenParameterByName(element, "OTWÓR ŻELBET WYSOKOŚĆ")
-    floor_h = getFamilyLenParameterByName(element, "POSADZKA GRUBOŚĆ WARSTW")
+    location_h = get_instance_location_point(element)
+    opening_h = get_family_len_parameter_by_name(element, "OTWÓR WYSOKOŚĆ")
+    opening_rough_h = get_family_len_parameter_by_name(element, "OTWÓR ŻELBET WYSOKOŚĆ")
+    floor_h = get_family_len_parameter_by_name(element, "POSADZKA GRUBOŚĆ WARSTW")
     # Get Parameters
     top_value = str((location_h + opening_rough_h) / 100)
     top_value = elev_replacer(top_value)
