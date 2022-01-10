@@ -66,7 +66,7 @@ def replace_duplicates_items(source):
         count_duplicates = len(duplicate_indexes)
         duplicates_range_list = list(range(1, count_duplicates + 1))
         duplicates_txt = add_duplicate_info_txt(duplicates_range_list)
-        for d, z  in zip(duplicates_txt, duplicate_indexes):
+        for d, z in zip(duplicates_txt, duplicate_indexes):
             d = str(d) + "__" + str(duplicate_item)
             source[z] = d
     return source
@@ -101,6 +101,8 @@ filter_materials = []
 for m in materials:
     if "--" in m.Name:
         m_name = m.Name
+        if "COPY" in m_name:
+            m_name = m_name.split("__")[1]
         m_des_from_name = m_name.split("--")[1].replace("-", ".")
         m_mark_from_name = m_name.split("--")[0].replace("-", ".")
         new_name = "--".join([m_mark_from_name, m_des_from_name])

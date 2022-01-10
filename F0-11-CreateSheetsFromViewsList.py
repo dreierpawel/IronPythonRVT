@@ -480,7 +480,7 @@ code_views_parameters_short = replace_duplicate_sheets_codes(all_sheets_list, co
 # Inputs to Create Sheets
 parameters_views_list = views_parameters_short
 sheets_number_list = code_views_parameters_short
-sheets_name_list = sub_elements_from_list(views_parameters_long, 10)
+sheets_name_list = sub_elements_from_list(views_parameters_long, -1)
 parameters_names_list = sheet_parameter_long_lst
 #
 par_name_lLst = parameters_names_list[:-2]

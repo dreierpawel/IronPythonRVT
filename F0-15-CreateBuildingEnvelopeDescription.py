@@ -389,7 +389,7 @@ def add_data_to_building_envelope_tag(layer_tag, be_list):
         "Soffit": 5,
         "Coreshaft": 1
     }
-    try:
+    if len(elements) != 0:
         # Filter walls from elements input
         walls = []
         for e in elements:
@@ -399,11 +399,10 @@ def add_data_to_building_envelope_tag(layer_tag, be_list):
                 if wTypeName == "Curtain Wall":
                     function_number = wall_function_dict.get("Curtain Wall")
                 walls.append((e, function_number))
-
         walls = sort_walls_Ext_to_Int(walls)
+        temp.append(walls)
         add_data_to_wall_tag(layer_tag, walls)
-
-    except:
+    if len(horizontal_elements) != 0:
         add_data_to_floor_tag(layer_tag, horizontal_elements)
 
 
