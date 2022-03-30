@@ -1,0 +1,46 @@
+import clr
+import sys
+sys.path.append('C:\Program Files (x86)\IronPython 2.7\Lib')
+import System
+from System import Array
+from System.Collections.Generic import *
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+clr.ImportExtensions(Revit.GeometryConversion)
+clr.AddReference("RevitServices")
+import RevitServices
+from RevitServices.Persistence import DocumentManager
+from RevitServices.Transactions import TransactionManager
+
+clr.AddReference("RevitAPI")
+clr.AddReference("RevitAPIUI")
+
+import Autodesk
+from Autodesk.Revit.DB import *
+from Autodesk.Revit.UI import *
+
+#######OK NOW YOU CAN CODE########
+
+
+def get_selected_elements():
+    global uiapp
+    global uidoc
+    selected_elements = uidoc.Selection
+    selected_elements_ids = selected_elements.GetElementIds()
+    elements_lst = []
+    for element_id in selected_elements_ids:
+        elements_lst.append(doc.GetElement(element_id))
+    return elements_lst
+
+
+# Doc & App
+doc = DocumentManager.Instance.CurrentDBDocument
+uiapp = DocumentManager.Instance.CurrentUIApplication
+uidoc = uiapp.ActiveUIDocument
+app = uiapp.Application
+# Input
+# OUT
+OUT = get_selected_elements()
